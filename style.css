@@ -1,11 +1,36 @@
-
+*{
+    font-family: arial;
+}
 #mastHead {
     height: 90vh;
     background: black;
     width: 100%;
     display: table;
-    background: url('images/coffee-beans.jpg');
+    background: url('images/titus.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
+    vertical-align: middle;
+}
+
+body {
+    margin: 0;
+}
+
+#mastHeadContent {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#logo {
+    margin: auto;
+    width: 261px;
+    height: 115px;
+    background: url('images/echo.gif');
+}
+
+.highlight {
+    background: rgba(26, 26, 26, 0.86);
+    color: white;
 }
