@@ -1,6 +1,7 @@
-*{
+* {
     font-family: arial;
 }
+
 #mastHead {
     height: 90vh;
     background: black;
@@ -38,23 +39,29 @@ body {
 .widest {
     max-width: 900px;
 }
-
+.widestplus {
+    max-width: 960px;
+}
 .widthWrap {
     margin-left: 20px;
     margin-right: 20px;
     margin: auto;
 }
+
 #top {
     position: fixed;
     width: 100%;
     background: #FFFFFF;
 }
+
+
 /*
 #top {
     width: 100%;
     background: #FFFFFF;
 }
 */
+
 #top h1 {
     font-size: 20px;
     float: left;
@@ -71,8 +78,57 @@ body {
     margin-top: 45px;
     margin-bottom: 0px;
 }
-.postImage{
-    width: 500px;
-    height: 500px;
+
+.post {
+    width: 440px;
+/*    float: left;*/
+    z-index: 0;
+}
+
+
+.postImage img{
+    max-width: 440px;
+/*    height: 200px;*/
     background-size: cover;
+}
+#navStick{
+    background: #f7f7f7;
+    width: 100%;
+    padding: 3px;
+    z-index: 1;
+}
+nav{
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid black;
+    max-width: 900px;
+    margin: auto;
+    z-index: 2;
+
+}
+nav ul{
+    display: inline;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+nav ul ul{
+    
+}
+nav li{
+    text-decoration: none;
+    display: inline;
+    margin-left: 0px;
+    background: #e6e6e6;
+    margin-right: 5px;
+    padding: 3px 0px 3px 0px;
+}
+nav ul ul li{
+    font-size: 14px;
+/*    padding: 3px;*/
+    color: #525252;
+}
+.dgrey{
+    background: #d0d0d0;
+    margin: 0;
+    padding: 3px;
 }

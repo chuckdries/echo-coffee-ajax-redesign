@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Echo Coffee</title>
     <link rel="stylesheet" href="style.css">
+    <script src="scripts/masonry.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.0.0/imagesloaded.pkgd.min.js"></script>
 </head>
 
 <body>
@@ -25,14 +27,25 @@
         </div>
 
     </div>
-    <nav>
-        <div class="widthWrap widest">
-            <ul>links
-                <li></li>
+    <div id="navStick" class="widthWrap">
+        <nav>
+
+            <ul>
+                <li><span class="dgrey">Home:</span>
+                    <ul>
+                        <li>About</li>
+                        <li>Drinks</li>
+                        <li>Eats</li>
+                        <li>What's new</li>
+                        <li>Contact</li>
+                    </ul>
+                </li>
+                <li><span class="dgrey">News</span></li>
             </ul>
-        </div>
-    </nav>
-    <div id="posts" class="widthWrap widest">
+
+        </nav>
+    </div>
+    <div id="posts" class="widthWrap widest grid js-masonry" data-masonry-options='{ "itemSelector": ".post", "columnWidth": 445 }'>
         <p id="loading">Loading posts...</p>
     </div>
     <!--Give us some breathing room just to test parallaxing-->
@@ -51,7 +64,14 @@
         xmlhttp.addEventListener("load", loadPosts); //event listener
         xmlhttp.open("GET", postURL); //load the master events list
         xmlhttp.send();
-        var postList = new Array;
+        var postList = [];
+        var xmlHTTPMediaLoaders = [];
+        var msnry;
+        var grid = document.querySelector('.grid');
+        msnry = new Masonry(grid, {
+            itemSelector: '.post',
+            columnWidth: 450
+        });
 
         function loadPosts() { //triggers when we get the master events list back
             postList = JSON.parse(this.responseText);
@@ -64,24 +84,32 @@
                 //var eventContain = 
                 postDiv.id = "p" + postList[post].id;
                 postDiv.className = 'post';
+//                postDiv.style.display = "none";
+                if (post % 2 != 0) {
+                    //                   postDiv.style.float = "right";
+                }
                 document.getElementById("posts").appendChild(postDiv);
-                document.getElementById("p" + postList[post].id).innerHTML = "<div id=\"image-" + postDiv.id + "\" class = \"postImage\" </div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
+                msnry.appended(postDiv);
+                document.getElementById("p" + postList[post].id).innerHTML = "<div id=\"image-" + postDiv.id + "\" class = \"postImage grid-item\" ></div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
+
 
             }
+            document.getElementById("loading").style.display = "none";
             listenForMedia();
+
+            //            console.log(msnry);
         }
 
         function listenForMedia() {
             xmlhttp.removeEventListener("load", loadPosts);
-            var xmlHTTPMediaLoaders = [];
+
             for (post in postList) {
                 var mediaURL = mediaBaseURL + "/" + postList[post].featured_image;
                 xmlHTTPMediaLoaders.push(new XMLHttpRequest());
-                xmlHTTPMediaLoaders[post].addEventListener("load", loadImages); 
+                xmlHTTPMediaLoaders[post].addEventListener("load", loadImages);
                 //Ideally I could pass the post variable to each loadImages somehow so I don't have to use a for loop on line 94
                 xmlHTTPMediaLoaders[post].open("GET", mediaURL); //load the master events list
                 xmlHTTPMediaLoaders[post].send();
-                console.log("mediaURL " + mediaURL);
 
             }
 
@@ -89,8 +117,7 @@
 
         function loadImages() {
             var imagesList = JSON.parse(this.responseText);
-            console.log(imagesList);
-            console.log("post " + post);
+            var postImage = document.createElement('img');
             for (post in postList) {
                 var imageID = postList[post].featured_image;
                 if (imagesList.id == imageID) {
@@ -98,10 +125,33 @@
                     var imageDiv = document.getElementById("image-" + postDiv.id);
                     var backgroundURL = imagesList.source_url;
                     console.log(backgroundURL);
-                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')"
+                    postImage.src = backgroundURL;
+                    imageDiv.appendChild(postImage);
+                    //                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')";
+                    xmlHTTPMediaLoaders[post].removeEventListener("load", loadImages);
+                    postDiv.style.display = "block";
+                    
                 }
             }
+            imagesLoaded('.grid', function () {
+                // layout Masonry after each image loads
+                msnry.layout();
+            });
+
+
+
         }
+
+
+        // external js: masonry.pkgd.js, imagesloaded.pkgd.js
+
+
+
+        //        var elem = document.getElementByID("posts");
+        //        var msnry = new Masonry(elem, {
+        //            // options
+        //            itemSelector: '.post',
+        //        });
     </script>
 </body>
 
