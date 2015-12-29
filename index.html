@@ -44,34 +44,6 @@
     <br />
     <br />
     <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
     <script>
         var xmlhttp = new XMLHttpRequest();
         var postURL = "http://chuckdries.com/blog/wp-json/wp/v2/posts";
@@ -83,7 +55,7 @@
 
         function loadPosts() { //triggers when we get the master events list back
             postList = JSON.parse(this.responseText);
-            console.log(postList);
+
 
             for (post in postList) {
 
@@ -96,42 +68,37 @@
                 document.getElementById("p" + postList[post].id).innerHTML = "<div id=\"image-" + postDiv.id + "\" class = \"postImage\" </div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
 
             }
-            //            document.getElementById("loading").style.opacity = 0;
-            //            document.getElementById("loadingh2").style.left = "30px";
-            //            document.getElementById("eventsh2").style.left = "0px";
-            //            document.getElementById("events").style.opacity = 1;
-            //            setTimeout(function () {
-            //                document.getElementById("loading").style.display = "none";
-            //            }, 10);
             listenForMedia();
         }
 
         function listenForMedia() {
+            xmlhttp.removeEventListener("load", loadPosts);
+            var xmlHTTPMediaLoaders = [];
             for (post in postList) {
                 var mediaURL = mediaBaseURL + "/" + postList[post].featured_image;
-                xmlhttp.removeEventListener("load", loadPosts);
-                xmlhttp.addEventListener("load", loadImages);
-                xmlhttp.open("GET", mediaURL); //load the master events list
-                xmlhttp.send();
+                xmlHTTPMediaLoaders.push(new XMLHttpRequest());
+                xmlHTTPMediaLoaders[post].addEventListener("load", loadImages);
+                xmlHTTPMediaLoaders[post].open("GET", mediaURL); //load the master events list
+                xmlHTTPMediaLoaders[post].send();
+                console.log("mediaURL " + mediaURL);
+
             }
 
         }
 
         function loadImages() {
             var imagesList = JSON.parse(this.responseText);
-
             console.log(imagesList);
+            console.log("post " + post);
             for (post in postList) {
                 var imageID = postList[post].featured_image;
-                var postDiv = document.getElementById("p" + postList[post].id);
-                var imageDiv = document.getElementById("image-" + postDiv.id);
-                var backgroundURL = "nope.jpg";
-                console.log(imageID);
-                backgroundURL = imagesList.source_url;
-                console.log(backgroundURL);
-                //                for (image in imagesList) { // console.log("image (index): " + image); // console.log("imagesList[image].id: " + imagesList[image].id); // if (imagesList[image].id == imageID) { // backgroundURL = imagesList[image].source_url; // console.log(backgroundURL); // } // }
-                imageDiv.style.backgroundImage = "url('" + backgroundURL + "')"
-                console.log("yo");
+                if (imagesList.id == imageID) {
+                    var postDiv = document.getElementById("p" + postList[post].id);
+                    var imageDiv = document.getElementById("image-" + postDiv.id);
+                    var backgroundURL = imagesList.source_url;
+                    console.log(backgroundURL);
+                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')"
+                }
             }
         }
     </script>
