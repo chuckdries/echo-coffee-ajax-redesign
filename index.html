@@ -75,34 +75,20 @@
 
         function loadPosts() { //triggers when we get the master events list back
             postList = JSON.parse(this.responseText);
-
-
             for (post in postList) {
-
                 //http://stackoverflow.com/questions/14004117/create-div-and-append-div-dynamically
                 var postDiv = document.createElement('div');
-                //var eventContain = 
                 postDiv.id = "p" + postList[post].id;
                 postDiv.className = 'post';
-//                postDiv.style.display = "none";
-                if (post % 2 != 0) {
-                    //                   postDiv.style.float = "right";
-                }
                 document.getElementById("posts").appendChild(postDiv);
                 msnry.appended(postDiv);
                 document.getElementById("p" + postList[post].id).innerHTML = "<div id=\"image-" + postDiv.id + "\" class = \"postImage grid-item\" ></div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
-
-
             }
             document.getElementById("loading").style.display = "none";
             listenForMedia();
-
-            //            console.log(msnry);
         }
-
         function listenForMedia() {
             xmlhttp.removeEventListener("load", loadPosts);
-
             for (post in postList) {
                 var mediaURL = mediaBaseURL + "/" + postList[post].featured_image;
                 xmlHTTPMediaLoaders.push(new XMLHttpRequest());
@@ -110,11 +96,8 @@
                 //Ideally I could pass the post variable to each loadImages somehow so I don't have to use a for loop on line 94
                 xmlHTTPMediaLoaders[post].open("GET", mediaURL); //load the master events list
                 xmlHTTPMediaLoaders[post].send();
-
             }
-
         }
-
         function loadImages() {
             var imagesList = JSON.parse(this.responseText);
             var postImage = document.createElement('img');
@@ -127,9 +110,8 @@
                     console.log(backgroundURL);
                     postImage.src = backgroundURL;
                     imageDiv.appendChild(postImage);
-                    //                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')";
+//                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')";
                     xmlHTTPMediaLoaders[post].removeEventListener("load", loadImages);
-                    postDiv.style.display = "block";
                     
                 }
             }
@@ -137,21 +119,7 @@
                 // layout Masonry after each image loads
                 msnry.layout();
             });
-
-
-
         }
-
-
-        // external js: masonry.pkgd.js, imagesloaded.pkgd.js
-
-
-
-        //        var elem = document.getElementByID("posts");
-        //        var msnry = new Masonry(elem, {
-        //            // options
-        //            itemSelector: '.post',
-        //        });
     </script>
 </body>
 
