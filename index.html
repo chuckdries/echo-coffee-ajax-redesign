@@ -67,11 +67,12 @@
 
         </nav>
     </div>
+    <div id="welcome" class="widthWrap medium">
+        <h3>Welcome</h3>
+        <p id="intro">Echo Coffee is a micro coffee roaster and coffee shop which seeks to provide a setting for great coffee in a friendly setting that promotes community, while serving fresh, organic products. WiFi is free, and there are numerous seating choices to match your mood.<span id="loading">Give us a minute while we load more information.</span></p>
+    </div>
     <div id="posts" class="widthWrap widest grid js-masonry" data-masonry-options='{ "itemSelector": ".post", "columnWidth": 445 }'>
-        <div class="post">
-            <h3>Welcome</h3>
-            <p id="intro">Echo Coffee is a micro coffee roaster and coffee shop which seeks to provide a setting for great coffee in a friendly setting that promotes community, while serving fresh, organic products. WiFi is free, and there are numerous seating choices to match your mood.<span id="loading">Give us a minute while we load more information.</span></p>
-        </div>
+
     </div>
     <!--Give us some breathing room just to test parallaxing-->
     <br />
@@ -161,8 +162,8 @@
         var msnry;
         var grid = document.querySelector('.grid');
         msnry = new Masonry(grid, {
-            itemSelector: '.post',
-            columnWidth: 300
+            itemSelector: '.post'
+//            columnWidth: 300
         });
 
         function loadPosts() { //triggers when we get the master events list back

@@ -38,6 +38,10 @@ body {
 .widest {
     max-width: 900px;
 }
+.medium {
+    max-width: 700px;
+    
+}
 .widestplus {
     max-width: 960px;
 }
@@ -45,6 +49,10 @@ body {
     margin-left: 20px;
     margin-right: 20px;
     margin: auto;
+}
+#welcome{
+    margin-bottom: 50px;
+    text-align: center;
 }
 #top {
     position: fixed;
@@ -76,16 +84,15 @@ body {
     margin-bottom: 0px;
 }
 .post {
-    width: 290px;
+    width: 440px;
     /*    float: left;*/
     
     z-index: 0;
     margin-right: 10px;
 }
 .postImage img {
-    max-width: 290px;
+    max-width: 440px;
     /*    height: 200px;*/
-    
     background-size: cover;
     z-index: -2;
 }
