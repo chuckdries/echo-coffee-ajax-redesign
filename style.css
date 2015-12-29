@@ -17,7 +17,7 @@
 body {
     margin: 0;
 }
-
+.clearFix{clear: both;height: 0px; margin: 0;}
 #mastHeadContent {
     display: table-cell;
     vertical-align: middle;
@@ -52,6 +52,8 @@ body {
     position: fixed;
     width: 100%;
     background: #FFFFFF;
+    height: 80px;
+    z-index: 100;
 }
 
 
@@ -80,31 +82,32 @@ body {
 }
 
 .post {
-    width: 440px;
+    width: 290px;
 /*    float: left;*/
     z-index: 0;
+    margin-right: 10px;
 }
 
 
 .postImage img{
-    max-width: 440px;
+    max-width: 290px;
 /*    height: 200px;*/
     background-size: cover;
+    z-index: -2;
 }
 #navStick{
-    background: #f7f7f7;
-    width: 100%;
-    padding: 3px;
-    z-index: 1;
+    display: none;
 }
 nav{
-    padding: 5px;
+    padding: 15px;
     margin: 5px;
     border: 1px solid black;
-    max-width: 900px;
+    max-width: 860px;
     margin: auto;
     z-index: 2;
-
+    position: relative;
+    right: 22px;
+    text-align: center;
 }
 nav ul{
     display: inline;
@@ -131,4 +134,34 @@ nav ul ul li{
     background: #d0d0d0;
     margin: 0;
     padding: 3px;
+}
+#posts {
+
+}
+
+.navBar {
+    background: #f7f7f7;
+    width: 100%;
+    padding: 10px;
+    z-index: 1;
+}
+
+#intro {
+    text-align: center;
+}
+
+#echo {
+    float: none;
+    text-align: center;
+    display: inline;
+    width: 500px;
+    margin: auto;
+    position: absolute;
+    top: 50px;
+    opacity: 0;
+    transition: .2s;
+}
+#echo h1{
+    float: none;
+    margin: 0;
 }

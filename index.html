@@ -15,8 +15,30 @@
         <div class="widthWrap widest">
             <h1>2902 N 68th St <br />Scottsdale, AZ 85251</h1>
             <h2>(480) 422-4081</h2>
-        </div>
+            <div id="echo">
+                <h1>Echo Coffee</h1></div>
 
+        </div>
+        <div class="clearFix"></div>
+
+        <div id="navStick" class="navBar widthWrap">
+            <nav>
+
+                <ul>
+                    <li><span class="dgrey">Home:</span>
+                        <ul>
+                            <li>About</li>
+                            <li>Drinks</li>
+                            <li>Eats</li>
+                            <li>What's new</li>
+                            <li>Contact</li>
+                        </ul>
+                    </li>
+                    <li><span class="dgrey">News</span></li>
+                </ul>
+
+            </nav>
+        </div>
     </div>
     <div id="mastHead">
         <div id="mastHeadContent">
@@ -27,7 +49,7 @@
         </div>
 
     </div>
-    <div id="navStick" class="widthWrap">
+    <div id="navUnStick" class="navBar widthWrap">
         <nav>
 
             <ul>
@@ -46,7 +68,10 @@
         </nav>
     </div>
     <div id="posts" class="widthWrap widest grid js-masonry" data-masonry-options='{ "itemSelector": ".post", "columnWidth": 445 }'>
-        <p id="loading">Loading posts...</p>
+        <div class="post">
+            <h3>Welcome</h3>
+            <p id="intro">Echo Coffee is a micro coffee roaster and coffee shop which seeks to provide a setting for great coffee in a friendly setting that promotes community, while serving fresh, organic products. WiFi is free, and there are numerous seating choices to match your mood.<span id="loading">Give us a minute while we load more information.</span></p>
+        </div>
     </div>
     <!--Give us some breathing room just to test parallaxing-->
     <br />
@@ -57,7 +82,74 @@
     <br />
     <br />
     <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <script>
+        /* Sticky nav */
+        var h = document.getElementById("navUnStick");
+        var j = document.getElementById("navStick")
+        var k = document.getElementById("echo")
+        var stuck = false;
+        var stickPoint = getDistance();
+        var top = document.getElementById("top");
+
+        function getDistance() {
+            var topDist = h.offsetTop;
+            return topDist;
+        }
+
+        window.onscroll = function (e) {
+            var distance = getDistance() - (window.pageYOffset + 80);
+            var offset = window.pageYOffset;
+            if ((distance <= 0) && !stuck) {
+                k.style.opacity = 1;
+                j.style.display = 'block';
+                k.style.top = '50px';
+                stuck = true;
+            } else if (stuck && (offset <= (stickPoint - 80))) {
+                j.style.display = 'none';
+                stuck = false;
+                k.style.opacity = 0;
+                k.style.top = '55px';
+            }
+        }
+
+
+        /* Load posts */
         var xmlhttp = new XMLHttpRequest();
         var postURL = "http://chuckdries.com/blog/wp-json/wp/v2/posts";
         var mediaBaseURL = "http://chuckdries.com/blog/wp-json/wp/v2/media";
@@ -70,7 +162,7 @@
         var grid = document.querySelector('.grid');
         msnry = new Masonry(grid, {
             itemSelector: '.post',
-            columnWidth: 450
+            columnWidth: 300
         });
 
         function loadPosts() { //triggers when we get the master events list back
@@ -87,6 +179,7 @@
             document.getElementById("loading").style.display = "none";
             listenForMedia();
         }
+
         function listenForMedia() {
             xmlhttp.removeEventListener("load", loadPosts);
             for (post in postList) {
@@ -98,6 +191,7 @@
                 xmlHTTPMediaLoaders[post].send();
             }
         }
+
         function loadImages() {
             var imagesList = JSON.parse(this.responseText);
             var postImage = document.createElement('img');
@@ -107,12 +201,12 @@
                     var postDiv = document.getElementById("p" + postList[post].id);
                     var imageDiv = document.getElementById("image-" + postDiv.id);
                     var backgroundURL = imagesList.source_url;
-                    console.log(backgroundURL);
+
                     postImage.src = backgroundURL;
                     imageDiv.appendChild(postImage);
-//                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')";
+                    //                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')";
                     xmlHTTPMediaLoaders[post].removeEventListener("load", loadImages);
-                    
+
                 }
             }
             imagesLoaded('.grid', function () {
