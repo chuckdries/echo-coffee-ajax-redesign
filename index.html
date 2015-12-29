@@ -77,7 +77,8 @@
             for (post in postList) {
                 var mediaURL = mediaBaseURL + "/" + postList[post].featured_image;
                 xmlHTTPMediaLoaders.push(new XMLHttpRequest());
-                xmlHTTPMediaLoaders[post].addEventListener("load", loadImages);
+                xmlHTTPMediaLoaders[post].addEventListener("load", loadImages); 
+                //Ideally I could pass the post variable to each loadImages somehow so I don't have to use a for loop on line 94
                 xmlHTTPMediaLoaders[post].open("GET", mediaURL); //load the master events list
                 xmlHTTPMediaLoaders[post].send();
                 console.log("mediaURL " + mediaURL);
