@@ -39,7 +39,7 @@ body {
     max-width: 900px;
 }
 .medium {
-    max-width: 700px;
+    max-width: 620px;
     
 }
 .widestplus {
@@ -107,7 +107,7 @@ nav {
     margin: auto;
     z-index: 2;
     position: relative;
-    right: 22px;
+    right: 15px;
     text-align: center;
 }
 nav ul {
@@ -115,18 +115,18 @@ nav ul {
     margin-left: 0px;
     padding-left: 0px;
 }
-nav ul ul {} nav li {
+ nav li {
     text-decoration: none;
     display: inline;
     margin-left: 0px;
-    background: #e6e6e6;
+    border: 1px solid grey;
     margin-right: 5px;
     padding: 3px 0px 3px 0px;
 }
 nav ul ul li {
     font-size: 14px;
     /*    padding: 3px;*/
-    
+    border: none;
     color: #525252;
 }
 .dgrey {
@@ -137,7 +137,7 @@ nav ul ul li {
 #posts {} .navBar {
     background: #f0f0f0;
     width: 100%;
-    padding: 10px;
+    padding: 10px 0px 10px 0px;
     z-index: 1;
 }
 #intro {
@@ -153,11 +153,20 @@ nav ul ul li {
     top: 60px;
     opacity: 0;
     transition: .2s;
+    
 }
 #echo h1 {
     float: none;
     margin: 0;
 }
 #navUnStick {
-    margin-bottom: 20px;
+
+
+}
+#welcome{
+    border:1px solid #000;
+border-width:1px 0 1px 0;
+    margin-top: 13vh;
+    margin-bottom: 13vh;
+    padding: 20px 0 20px 0;
 }

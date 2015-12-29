@@ -69,56 +69,14 @@
     </div>
     <div id="welcome" class="widthWrap medium">
         <h3>Welcome</h3>
-        <p id="intro">Echo Coffee is a micro coffee roaster and coffee shop which seeks to provide a setting for great coffee in a friendly setting that promotes community, while serving fresh, organic products. WiFi is free, and there are numerous seating choices to match your mood.<span id="loading">Give us a minute while we load more information.</span></p>
+        <p id="intro">Echo Coffee is a micro coffee roaster and coffee shop which seeks to provide a setting for great coffee in a friendly setting that promotes community, while serving fresh, organic products. WiFi is free, and there are numerous seating choices to match your mood.</p>
     </div>
     <div id="posts" class="widthWrap widest grid js-masonry" data-masonry-options='{ "itemSelector": ".post", "columnWidth": 445 }'>
+    <span id="loading"> Give us a minute while we load more information.</span>
 
     </div>
     <!--Give us some breathing room just to test parallaxing-->
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+    
     <script>
         /* Sticky nav */
         var h = document.getElementById("navUnStick");
@@ -177,7 +135,7 @@
                 msnry.appended(postDiv);
                 document.getElementById("p" + postList[post].id).innerHTML = "<div id=\"image-" + postDiv.id + "\" class = \"postImage grid-item\" ></div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
             }
-            document.getElementById("loading").style.display = "none";
+            
             listenForMedia();
         }
 
@@ -213,6 +171,7 @@
             imagesLoaded('.grid', function () {
                 // layout Masonry after each image loads
                 msnry.layout();
+                document.getElementById("loading").style.display = "none";
             });
         }
     </script>
