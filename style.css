@@ -1,7 +1,6 @@
 * {
     font-family: arial;
 }
-
 #mastHead {
     height: 90vh;
     background: black;
@@ -13,29 +12,29 @@
     background-attachment: fixed;
     vertical-align: middle;
 }
-
 body {
     margin: 0;
 }
-.clearFix{clear: both;height: 0px; margin: 0;}
+.clearFix {
+    clear: both;
+    height: 0px;
+    margin: 0;
+}
 #mastHeadContent {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
 }
-
 #logo {
     margin: auto;
     width: 261px;
     height: 115px;
     background: url('images/echo.gif');
 }
-
 .highlight {
     background: rgba(26, 26, 26, 0.86);
     color: white;
 }
-
 .widest {
     max-width: 900px;
 }
@@ -47,7 +46,6 @@ body {
     margin-right: 20px;
     margin: auto;
 }
-
 #top {
     position: fixed;
     width: 100%;
@@ -55,8 +53,6 @@ body {
     height: 80px;
     z-index: 100;
 }
-
-
 /*
 #top {
     width: 100%;
@@ -70,7 +66,6 @@ body {
     margin-top: 25px;
     margin-bottom: 5px;
 }
-
 #top h2 {
     float: right;
     font-size: 20px;
@@ -80,25 +75,24 @@ body {
     margin-top: 45px;
     margin-bottom: 0px;
 }
-
 .post {
     width: 290px;
-/*    float: left;*/
+    /*    float: left;*/
+    
     z-index: 0;
     margin-right: 10px;
 }
-
-
-.postImage img{
+.postImage img {
     max-width: 290px;
-/*    height: 200px;*/
+    /*    height: 200px;*/
+    
     background-size: cover;
     z-index: -2;
 }
-#navStick{
+#navStick {
     display: none;
 }
-nav{
+nav {
     padding: 15px;
     margin: 5px;
     border: 1px solid black;
@@ -109,15 +103,12 @@ nav{
     right: 22px;
     text-align: center;
 }
-nav ul{
+nav ul {
     display: inline;
     margin-left: 0px;
     padding-left: 0px;
 }
-nav ul ul{
-    
-}
-nav li{
+nav ul ul {} nav li {
     text-decoration: none;
     display: inline;
     margin-left: 0px;
@@ -125,31 +116,26 @@ nav li{
     margin-right: 5px;
     padding: 3px 0px 3px 0px;
 }
-nav ul ul li{
+nav ul ul li {
     font-size: 14px;
-/*    padding: 3px;*/
+    /*    padding: 3px;*/
+    
     color: #525252;
 }
-.dgrey{
+.dgrey {
     background: #d0d0d0;
     margin: 0;
     padding: 3px;
 }
-#posts {
-
-}
-
-.navBar {
-    background: #f7f7f7;
+#posts {} .navBar {
+    background: #f0f0f0;
     width: 100%;
     padding: 10px;
     z-index: 1;
 }
-
 #intro {
     text-align: center;
 }
-
 #echo {
     float: none;
     text-align: center;
@@ -157,11 +143,14 @@ nav ul ul li{
     width: 500px;
     margin: auto;
     position: absolute;
-    top: 50px;
+    top: 60px;
     opacity: 0;
     transition: .2s;
 }
-#echo h1{
+#echo h1 {
     float: none;
     margin: 0;
+}
+#navUnStick {
+    margin-bottom: 20px;
 }
