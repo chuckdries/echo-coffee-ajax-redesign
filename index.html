@@ -97,10 +97,12 @@
             if ((distance <= 0) && !stuck) {
                 k.style.opacity = 1;
                 j.style.display = 'block';
+                h.style.display = 'hidden';
                 k.style.top = '50px';
                 stuck = true;
             } else if (stuck && (offset <= (stickPoint - 80))) {
                 j.style.display = 'none';
+                h.style.display = 'block';
                 stuck = false;
                 k.style.opacity = 0;
                 k.style.top = '55px';
