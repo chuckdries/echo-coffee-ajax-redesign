@@ -72,11 +72,11 @@
         <p id="intro">Echo Coffee is a micro coffee roaster and coffee shop which seeks to provide a setting for great coffee in a friendly setting that promotes community, while serving fresh, organic products. WiFi is free, and there are numerous seating choices to match your mood.</p>
     </div>
     <div id="posts" class="widthWrap widest grid js-masonry" data-masonry-options='{ "itemSelector": ".post", "columnWidth": 445 }'>
-    <span id="loading"> Give us a minute while we load more information.</span>
+        <span id="loading"> Give us a minute while we load more information.</span>
 
     </div>
     <!--Give us some breathing room just to test parallaxing-->
-    
+
     <script>
         /* Sticky nav */
         var h = document.getElementById("navUnStick");
@@ -121,7 +121,7 @@
         var grid = document.querySelector('.grid');
         msnry = new Masonry(grid, {
             itemSelector: '.post'
-//            columnWidth: 300
+                //            columnWidth: 300
         });
 
         function loadPosts() { //triggers when we get the master events list back
@@ -135,7 +135,7 @@
                 msnry.appended(postDiv);
                 document.getElementById("p" + postList[post].id).innerHTML = "<div id=\"image-" + postDiv.id + "\" class = \"postImage grid-item\" ></div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
             }
-            
+
             listenForMedia();
         }
 
@@ -144,15 +144,20 @@
             for (post in postList) {
                 var mediaURL = mediaBaseURL + "/" + postList[post].featured_image;
                 xmlHTTPMediaLoaders.push(new XMLHttpRequest());
-                xmlHTTPMediaLoaders[post].addEventListener("load", loadImages);
+                console.log(post);
+                xmlHTTPMediaLoaders[post].addEventListener("load", function(){
+                    loadImages( this.responseText);
+                } );
+
+
                 //Ideally I could pass the post variable to each loadImages somehow so I don't have to use a for loop on line 94
                 xmlHTTPMediaLoaders[post].open("GET", mediaURL); //load the master events list
                 xmlHTTPMediaLoaders[post].send();
             }
         }
 
-        function loadImages() {
-            var imagesList = JSON.parse(this.responseText);
+        function loadImages(rt) {
+            var imagesList = JSON.parse(rt);
             var postImage = document.createElement('img');
             for (post in postList) {
                 var imageID = postList[post].featured_image;
