@@ -6,7 +6,7 @@
     <title>Echo Coffee</title>
     <link rel="stylesheet" href="style.css">
     <script src="scripts/masonry.pkgd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.0.0/imagesloaded.pkgd.min.js"></script>
+
 </head>
 
 <body>
@@ -108,79 +108,82 @@
                 k.style.top = '55px';
             }
         }
-
-
-        /* Load posts */
-        var xmlhttp = new XMLHttpRequest();
-        var postURL = "http://chuckdries.com/blog/wp-json/wp/v2/posts";
+        /* End sticky nav */
+        
         var mediaBaseURL = "http://chuckdries.com/blog/wp-json/wp/v2/media";
-        xmlhttp.addEventListener("load", loadPosts); //event listener
-        xmlhttp.open("GET", postURL); //load the master events list
-        xmlhttp.send();
+
+        var xmlHttpReq = [];
         var postList = [];
-        var xmlHTTPMediaLoaders = [];
+        var mediaIDList = [];
+
+        /* render post HTML to the dom per post */
+        function displayData(parsedData, idx) {
+
+            postList = parsedData;
+            for (var post in postList) {
+                var pid = post
+                
+                var postDiv = document.createElement('div');
+
+                postDiv.id = "p" + postList[post].id;
+                postDiv.className = "post";
+                document.getElementById("posts").appendChild(postDiv);
+                msnry.appended(postDiv);
+                var postInner = "<div id=\"image-" + postDiv.id + "\" class = \"postImage grid-item\" ></div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
+                postDiv.innerHTML = postInner;
+                getMediaMeta(postList[pid].featured_image, postDiv.id);
+            }
+        }
+        /* Get media per post */
+        function getMediaMeta( mediaId, pdid) {
+            var mediaURL = mediaBaseURL + "/" + mediaId;
+            var mid = wGetJSON(mediaURL, getMediaData);
+            mediaIDList[mid] = pdid;
+        }
+
+        function getMediaData(parsedData, idx){
+            var post = document.getElementById(mediaIDList[idx]);
+            var imageDiv = document.getElementById("image-" + post.id);
+            var sourceURL = parsedData.media_details.sizes.large.source_url;
+            var postImage = document.createElement('img');
+            postImage.src = sourceURL;
+            imageDiv.appendChild(postImage);
+            postImage.addEventListener("load", function(){
+                msnry.layout();
+                document.getElementById("loading").style.display = "none";
+            })
+        }
+        function wGetJSON(url, callbackFunc, filter) {
+            var idx = xmlHttpReq.length;
+            xmlHttpReq.push(new XMLHttpRequest());
+            (function (idx, url, callbackFunc, filter) { // Create a function to preserve the state of the variables for this call
+                if (filter == undefined) {
+                    xmlHttpReq[idx].open("GET", url); //load the Just the url
+                } else {
+                    xmlHttpReq[idx].open("GET", url + "?filter" + filter); //apply the filter to the url
+                }
+                xmlHttpReq[idx].onreadystatechange = function (oEvent) {
+                    if (xmlHttpReq[idx].readyState === 4) {
+                        if (xmlHttpReq[idx].status === 200) {
+                            callbackFunc(JSON.parse(xmlHttpReq[idx].responseText), idx);
+                        } else {
+                            console.log("Error on Idx: " + idx, url, xmlHttpReq[idx].statusText);
+                        }
+                    }
+                };
+                xmlHttpReq[idx].send(null); //Send the request
+            })(idx, url, callbackFunc, filter); // And call the preserving function immediately
+            return idx;
+        }
+
+        wGetJSON("http://chuckdries.com/blog/wp-json/wp/v2/posts?filter[category_name]=homepage", displayData)
+
         var msnry;
         var grid = document.querySelector('.grid');
         msnry = new Masonry(grid, {
             itemSelector: '.post'
-                //            columnWidth: 300
         });
 
-        function loadPosts() { //triggers when we get the master events list back
-            postList = JSON.parse(this.responseText);
-            for (post in postList) {
-                //http://stackoverflow.com/questions/14004117/create-div-and-append-div-dynamically
-                var postDiv = document.createElement('div');
-                postDiv.id = "p" + postList[post].id;
-                postDiv.className = 'post';
-                document.getElementById("posts").appendChild(postDiv);
-                msnry.appended(postDiv);
-                document.getElementById("p" + postList[post].id).innerHTML = "<div id=\"image-" + postDiv.id + "\" class = \"postImage grid-item\" ></div> <h3 class=\"postTitle\">" + postList[post].title.rendered + "</h3> <p class=\"postContent\">" + postList[post].content.rendered + "</p>";
-            }
-
-            listenForMedia();
-        }
-
-        function listenForMedia() {
-            xmlhttp.removeEventListener("load", loadPosts);
-            for (post in postList) {
-                var mediaURL = mediaBaseURL + "/" + postList[post].featured_image;
-                xmlHTTPMediaLoaders.push(new XMLHttpRequest());
-                console.log(post);
-                xmlHTTPMediaLoaders[post].addEventListener("load", function(){
-                    loadImages( this.responseText);
-                } );
-
-
-                //Ideally I could pass the post variable to each loadImages somehow so I don't have to use a for loop on line 94
-                xmlHTTPMediaLoaders[post].open("GET", mediaURL); //load the master events list
-                xmlHTTPMediaLoaders[post].send();
-            }
-        }
-
-        function loadImages(rt) {
-            var imagesList = JSON.parse(rt);
-            var postImage = document.createElement('img');
-            for (post in postList) {
-                var imageID = postList[post].featured_image;
-                if (imagesList.id == imageID) {
-                    var postDiv = document.getElementById("p" + postList[post].id);
-                    var imageDiv = document.getElementById("image-" + postDiv.id);
-                    var backgroundURL = imagesList.source_url;
-
-                    postImage.src = backgroundURL;
-                    imageDiv.appendChild(postImage);
-                    //                    imageDiv.style.backgroundImage = "url('" + backgroundURL + "')";
-                    xmlHTTPMediaLoaders[post].removeEventListener("load", loadImages);
-
-                }
-            }
-            imagesLoaded('.grid', function () {
-                // layout Masonry after each image loads
-                msnry.layout();
-                document.getElementById("loading").style.display = "none";
-            });
-        }
     </script>
 </body>
 
